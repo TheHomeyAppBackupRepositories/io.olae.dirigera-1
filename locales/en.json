@@ -1,0 +1,14 @@
+{
+  "connecting": {
+    "title": "Connecting to Dirigera",
+    "information1": "Homey is trying to connect to your IKEA Dirigera Hub. Please wait!"
+  },
+  "authenticate": {
+    "title": "Authenticate with hub",
+    "information1": "Please press the Action-button on the back of your Dirigera Hub"
+  },
+  "authresult": {
+    "title": "Successfully authenticated",
+    "information1": "Homey is now authenticated with the IKEA Dirigera Hub and the device has been added to Homey"
+  }
+}

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<script type="application/javascript">
+  Homey.setTitle(Homey.__("authresult.title"));
+  Homey.setSubtitle(Homey.__('authresult.information1'));
+
+  Homey.on("create_device", function(device) {
+    Homey.createDevice(device)
+      .then(function(result) {
+        Homey.done();
+      })
+      .catch(function(error) {
+        Homey.alert(error);
+      });
+  });
+</script>
+<html>
+  <head>
+  </head>
+  <body>
+  </body>
+</html>

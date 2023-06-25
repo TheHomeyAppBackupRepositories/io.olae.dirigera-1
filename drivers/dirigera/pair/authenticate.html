@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<script type="application/javascript">
+  Homey.setTitle(Homey.__("authenticate.title"));
+  Homey.setSubtitle(Homey.__('authenticate.information1'));
+  Homey.setNavigationClose();
+
+  let tryAuth = true;
+
+  Homey.on("auth_ok", function () {
+    tryAuth = false;
+  });
+
+  function timeout() {
+    if(!tryAuth) { return };
+    Homey.emit("getToken");
+    setTimeout(timeout, 4000);
+  }
+
+  setTimeout(timeout, 2000);
+</script>
+<style type="text/css">
+  #authenticate-button {
+    display: block;
+    width: 80vw;
+    height: 80vw;
+    margin: 2em auto;
+    background: url(press_button.svg) no-repeat center center;
+    background-size: contain;
+  }
+</style>
+<html>
+  <head>
+  </head>
+  <body>
+    <div id="authenticate-button"></div>
+  </body>
+</html>

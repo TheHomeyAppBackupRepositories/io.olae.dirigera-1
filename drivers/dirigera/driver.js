@@ -30,6 +30,9 @@ class DirigeraDriver extends Driver {
         name: discoveryResult.txt.hostname,
         data: {
           id: discoveryResult.id,
+        },
+        store: {
+          ipaddress: discoveryResult.address,
         }
       }
     });
@@ -64,7 +67,7 @@ class DirigeraDriver extends Driver {
         driver.log("Trying to connect to dirigera hub");
 
         const axiosInstance = Axios.create({
-          baseURL: "https://172.31.254.196:8443/v1",
+          baseURL: "https://" + selectedDevice.store.ipaddress + ":8443/v1",
           timeout: 3000,
           responseType: 'json',
           httpsAgent: new Https.Agent({rejectUnauthorized: false})
@@ -95,7 +98,7 @@ class DirigeraDriver extends Driver {
       driver.log("Trying to fetch token");
 
       const axiosInstance = Axios.create({
-        baseURL: "https://172.31.254.196:8443/v1",
+        baseURL: "https://" + selectedDevice.store.ipaddress + ":8443/v1",
         timeout: 3000,
         responseType: 'json',
         httpsAgent: new Https.Agent({rejectUnauthorized: false})

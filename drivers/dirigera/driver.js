@@ -64,10 +64,12 @@ class DirigeraDriver extends Driver {
         driver.log("Ver: " + driver.codeVerifier);
         driver.log("Challange: " + driver.codeChallenge);
 
-        driver.log("Trying to connect to dirigera hub");
+
+        let dirigeraBaseURL = "https://" + selectedDevice.store.ipaddress + ":8443/v1";
+        driver.log("Trying to connect to dirigera hub at " + dirigeraBaseURL);
 
         const axiosInstance = Axios.create({
-          baseURL: "https://" + selectedDevice.store.ipaddress + ":8443/v1",
+          baseURL: dirigeraBaseURL,
           timeout: 3000,
           responseType: 'json',
           httpsAgent: new Https.Agent({rejectUnauthorized: false})
@@ -89,7 +91,21 @@ class DirigeraDriver extends Driver {
           session.nextView();
         })
         .catch(function(error) {
-          // Do nothing
+          if (error.response) {
+            driver.log("Axios Error: The request was made and the server responded with a status code that falls out of the range of 2xx");
+            driver.log("Data: " + error.response.data);
+            driver.log("Status: " + error.response.status);
+            driver.log("Headers: " + error.response.headers);
+          } else if (error.request) {
+            driver.log("Axios Error: The request was made but no response was received");
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            driver.log("Request: " + error.request);
+          } else {
+            driver.log("Axios Error: Something happened in setting up the request that triggered an Error");
+            driver.log('Error: ' + error.message);
+          }
+          driver.log("Config: " + error.config);
         })
       }
     })
@@ -119,12 +135,24 @@ class DirigeraDriver extends Driver {
         session.nextView();
       })
       .catch(function(error) {
-        driver.log("There was an error: " + error)
+        if (error.response) {
+          driver.log("Axios Error: The request was made and the server responded with a status code that falls out of the range of 2xx");
+          driver.log("Data: " + error.response.data);
+          driver.log("Status: " + error.response.status);
+          driver.log("Headers: " + error.response.headers);
+        } else if (error.request) {
+          driver.log("Axios Error: The request was made but no response was received");
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          driver.log("Request: " + error.request);
+        } else {
+          driver.log("Axios Error: Something happened in setting up the request that triggered an Error");
+          driver.log('Error: ' + error.message);
+        }
+        driver.log("Config: " + error.config);
       })
     })
   }
-
-
 
 }
 
